@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Riyaji Devindu — Portfolio Website
+
+A modern, responsive, SEO-optimized portfolio website for a Software & AI/ML Engineer. Built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion**.
+
+## Features
+
+- **Dark Theme** with cyan/purple gradient accents and glassmorphism
+- **Animated Hero** with typewriter effect and floating particles
+- **Bento Grid Skills** layout with categorized tech stack
+- **Timeline Experience** section with alternating layout
+- **Project Showcase** with featured filtering
+- **Blog System** with admin CRUD
+- **Admin Panel** — manage posts, settings, and view analytics
+- **Traffic Tracking** — built-in visitor analytics dashboard
+- **SEO Optimized** — sitemap, robots.txt, Open Graph, structured metadata
+- **Fully Responsive** — mobile-first design
+- **Lightweight** — static generation, optimized images, minimal JS
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 14 (App Router) | Framework, SSG, API routes |
+| Tailwind CSS | Styling, responsive design |
+| Framer Motion | Animations, scroll reveals |
+| Lucide React | Icons |
+| TypeScript | Type safety |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin Panel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Access the admin panel at `/admin`. Default password: `admin123`
 
-## Learn More
+**Change the password** by setting the `ADMIN_PASSWORD` environment variable:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+ADMIN_PASSWORD=your_secure_password
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Admin Features:
+- **Dashboard** — view traffic analytics (today, 7-day, 30-day, total)
+- **Posts** — create, edit, delete blog posts
+- **Settings** — update site title, description, social links, visibility
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment (Free)
 
-## Deploy on Vercel
+### Vercel (Recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push this repo to GitHub
+2. Go to [vercel.com](https://vercel.com) and import the repository
+3. Set environment variables:
+   - `ADMIN_PASSWORD` — your admin password
+   - `NEXT_PUBLIC_SITE_URL` — your domain (e.g., `https://riyajidevindu.vercel.app`)
+4. Deploy!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Alternative Free Hosts
+- **Netlify** — supports Next.js with `@netlify/plugin-nextjs`
+- **Cloudflare Pages** — static export with `next export`
+- **Railway** — full server-side support
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx          # Home page (all sections)
+│   ├── blog/             # Blog listing & posts
+│   ├── admin/            # Admin panel (dashboard, posts, settings)
+│   ├── api/              # API routes (auth, posts, settings, analytics)
+│   ├── sitemap.ts        # SEO sitemap
+│   ├── robots.ts         # SEO robots.txt
+│   └── manifest.ts       # PWA manifest
+├── components/           # React components
+├── data/                 # JSON data (profile, posts, settings)
+└── styles/               # Global CSS
+```
+
+## Customization
+
+Edit `src/data/profile.json` to update your information. The website will automatically reflect the changes.
+
+## License
+
+MIT
