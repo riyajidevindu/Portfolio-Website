@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "date": "2026-02-13",
+    "page": "/",
+    "referrer": "direct",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.109.2 Chrome/142.0.7444.265 Electron/39.3.0 Safari/537.36",
+    "timestamp": 1770968370629
+  }
+]

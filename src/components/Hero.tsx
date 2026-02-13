@@ -55,9 +55,10 @@ function TypewriterText() {
 }
 
 function FloatingParticles() {
+  const count = typeof window !== "undefined" && window.innerWidth < 768 ? 12 : 30;
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 30 }).map((_, i) => (
+      {Array.from({ length: count }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full"
@@ -92,12 +93,12 @@ export default function Hero() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden grid-bg"
     >
       {/* Gradient orbs */}
-      <div className="absolute top-1/4 -left-32 h-[500px] w-[500px] rounded-full bg-primary/5 blur-[120px]" />
-      <div className="absolute bottom-1/4 -right-32 h-[500px] w-[500px] rounded-full bg-secondary/5 blur-[120px]" />
+      <div className="absolute top-1/4 -left-32 h-[300px] w-[300px] rounded-full bg-primary/5 blur-[100px] md:h-[500px] md:w-[500px] md:blur-[120px]" />
+      <div className="absolute bottom-1/4 -right-32 h-[300px] w-[300px] rounded-full bg-secondary/5 blur-[100px] md:h-[500px] md:w-[500px] md:blur-[120px]" />
 
       <FloatingParticles />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 text-center">
         {/* Status badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -117,7 +118,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-7xl"
+          className="mb-4 text-3xl font-bold tracking-tight sm:text-5xl md:text-7xl"
         >
           Hi, I&apos;m{" "}
           <span className="gradient-text">{profile.name}</span>

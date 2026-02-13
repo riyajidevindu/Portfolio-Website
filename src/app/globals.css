@@ -140,3 +140,35 @@ section {
 .animated-underline:hover::after {
   width: 100%;
 }
+
+/* Mobile touch targets */
+@media (max-width: 767px) {
+  .glass-hover:active {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+
+  .glow-hover:active {
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.25), 0 0 80px rgba(168, 85, 247, 0.15);
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fix iOS overscroll */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+}

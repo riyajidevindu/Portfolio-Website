@@ -8,7 +8,7 @@ import profile from "@/data/profile.json";
 export default function Experience() {
   return (
     <section id="experience" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
@@ -20,7 +20,7 @@ export default function Experience() {
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/50 via-secondary/50 to-transparent md:left-1/2 md:-translate-x-1/2" />
+          <div className="absolute left-[18px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/50 via-secondary/50 to-transparent md:left-1/2 md:-translate-x-1/2" />
 
           {profile.experience.map((exp, index) => (
             <ScrollReveal
@@ -39,14 +39,14 @@ export default function Experience() {
                     whileHover={{ scale: 1.2 }}
                     className="relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/50 bg-background"
                   >
-                    <Briefcase size={18} className="text-primary" />
-                    <div className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+                    <Briefcase size={16} className="text-primary" />
+                    <div className="absolute inset-0 animate-ping rounded-full bg-primary/20" style={{ animationDuration: '3s' }} />
                   </motion.div>
                 </div>
 
                 {/* Content card */}
                 <div
-                  className={`ml-14 w-full md:ml-0 md:w-[calc(50%-2rem)] ${
+                  className={`ml-16 w-auto md:ml-0 md:w-[calc(50%-2rem)] ${
                     index % 2 === 0
                       ? "md:mr-auto md:pr-8"
                       : "md:ml-auto md:pl-8"

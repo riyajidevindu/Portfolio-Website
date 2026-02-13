@@ -34,7 +34,7 @@ const highlights = [
 export default function About() {
   return (
     <section id="about" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
@@ -48,7 +48,7 @@ export default function About() {
           {/* Text Content */}
           <ScrollReveal className="lg:col-span-3" direction="left">
             <div className="space-y-6">
-              <p className="text-lg leading-relaxed text-foreground/70">
+              <p className="text-base sm:text-lg leading-relaxed text-foreground/70">
                 I&apos;m an engineering graduate from the{" "}
                 <span className="font-semibold text-foreground">
                   {profile.education.university}
@@ -60,7 +60,7 @@ export default function About() {
                 . My passion lies at the intersection of software engineering
                 and artificial intelligence.
               </p>
-              <p className="text-lg leading-relaxed text-foreground/70">
+              <p className="text-base sm:text-lg leading-relaxed text-foreground/70">
                 I specialize in building{" "}
                 <span className="text-primary font-medium">
                   privacy-preserving AI systems
@@ -77,7 +77,7 @@ export default function About() {
                 building WhatsApp automation with Agentic AI — I thrive on
                 solving complex, real-world problems.
               </p>
-              <p className="text-lg leading-relaxed text-foreground/70">
+              <p className="text-base sm:text-lg leading-relaxed text-foreground/70">
                 When I&apos;m not coding, you&apos;ll find me leading IEEE
                 initiatives, exploring emerging tech like Rust and SLMs, or
                 contributing to open-source projects.
