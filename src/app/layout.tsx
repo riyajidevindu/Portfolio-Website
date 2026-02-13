@@ -81,8 +81,9 @@ export default function RootLayout({
               url: "https://riyajidevindu.vercel.app",
               sameAs: [
                 "https://github.com/riyajidevindu",
-                "https://linkedin.com/in/riyajidevindu",
+                "https://www.linkedin.com/in/riyaji-samasundara-979b96265/",
               ],
+              image: "https://riyajidevindu.vercel.app/images/Riyaji_Devindu_02.jpg",
               alumniOf: {
                 "@type": "CollegeOrUniversity",
                 name: "University of Ruhuna",

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown, MapPin } from "lucide-react";
+import Image from "next/image";
 import profile from "@/data/profile.json";
 
 const roles = [
@@ -121,114 +122,164 @@ export default function Hero() {
 
       <FloatingParticles />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 sm:px-6 text-center">
-        {/* Status badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-          </span>
-          Open to opportunities
-        </motion.div>
-
-        {/* Name */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mb-4 text-3xl font-bold tracking-tight sm:text-5xl md:text-7xl"
-        >
-          Hi, I&apos;m{" "}
-          <span className="gradient-text">{profile.name}</span>
-        </motion.h1>
-
-        {/* Typewriter role */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="mb-6 text-xl font-medium sm:text-2xl md:text-3xl"
-        >
-          <TypewriterText />
-        </motion.div>
-
-        {/* Summary */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="mx-auto mb-4 max-w-2xl text-base leading-relaxed text-foreground/60 sm:text-lg"
-        >
-          {profile.summary}
-        </motion.p>
-
-        {/* Location */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mb-8 flex items-center justify-center gap-2 text-sm text-foreground/40"
-        >
-          <MapPin size={14} />
-          <span>{profile.location}</span>
-          <span className="mx-2">•</span>
-          <span>{profile.education.university}</span>
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.6 }}
-          className="mb-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <a
-            href="#contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-primary to-secondary px-8 py-3.5 text-sm font-semibold text-background transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
-          >
-            <span className="relative z-10">Get In Touch</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </a>
-          <a
-            href="#projects"
-            className="glass glass-hover inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold text-foreground transition-all duration-300"
-          >
-            View Projects
-          </a>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="flex items-center justify-center gap-5"
-        >
-          {[
-            { icon: Github, href: profile.github, label: "GitHub" },
-            { icon: Linkedin, href: profile.linkedin, label: "LinkedIn" },
-            { icon: Mail, href: `mailto:${profile.email}`, label: "Email" },
-          ].map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target={label !== "Email" ? "_blank" : undefined}
-              rel={label !== "Email" ? "noopener noreferrer" : undefined}
-              aria-label={label}
-              className="group rounded-xl p-3 text-foreground/40 transition-all duration-300 hover:bg-white/5 hover:text-primary"
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 sm:px-6">
+        <div className="flex flex-col-reverse items-center gap-10 lg:flex-row lg:gap-16">
+          {/* Left: Text Content */}
+          <div className="flex-1 text-center lg:text-left">
+            {/* Status badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary"
             >
-              <Icon
-                size={22}
-                className="transition-transform duration-300 group-hover:scale-110"
-              />
-            </a>
-          ))}
-        </motion.div>
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              Open to opportunities
+            </motion.div>
+
+            {/* Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mb-4 text-3xl font-bold tracking-tight sm:text-5xl md:text-7xl"
+            >
+              Hi, I&apos;m{" "}
+              <span className="gradient-text">{profile.name}</span>
+            </motion.h1>
+
+            {/* Typewriter role */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="mb-6 text-xl font-medium sm:text-2xl md:text-3xl"
+            >
+              <TypewriterText />
+            </motion.div>
+
+            {/* Summary */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="mx-auto mb-4 max-w-2xl text-base leading-relaxed text-foreground/60 sm:text-lg lg:mx-0"
+            >
+              {profile.summary}
+            </motion.p>
+
+            {/* Location */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="mb-8 flex items-center justify-center gap-2 text-sm text-foreground/40 lg:justify-start"
+            >
+              <MapPin size={14} />
+              <span>{profile.location}</span>
+              <span className="mx-2">•</span>
+              <span>{profile.education.university}</span>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+              className="mb-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start"
+            >
+              <a
+                href="#contact"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-primary to-secondary px-8 py-3.5 text-sm font-semibold text-background transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+              >
+                <span className="relative z-10">Get In Touch</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              </a>
+              <a
+                href="#projects"
+                className="glass glass-hover inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold text-foreground transition-all duration-300"
+              >
+                View Projects
+              </a>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              className="flex items-center justify-center gap-5 lg:justify-start"
+            >
+              {[
+                { icon: Github, href: profile.github, label: "GitHub" },
+                { icon: Linkedin, href: profile.linkedin, label: "LinkedIn" },
+                { icon: Mail, href: `mailto:${profile.email}`, label: "Email" },
+              ].map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={label !== "Email" ? "_blank" : undefined}
+                  rel={label !== "Email" ? "noopener noreferrer" : undefined}
+                  aria-label={label}
+                  className="group rounded-xl p-3 text-foreground/40 transition-all duration-300 hover:bg-white/5 hover:text-primary"
+                >
+                  <Icon
+                    size={22}
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
+                </a>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right: Profile Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+            className="relative flex-shrink-0"
+          >
+            {/* Animated gradient ring */}
+            <div className="hero-image-ring relative h-64 w-64 sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-[340px] lg:w-[340px]">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-secondary to-pink-500 p-[3px]">
+                <div className="h-full w-full rounded-full bg-background" />
+              </div>
+              {/* Image */}
+              <div className="absolute inset-[6px] overflow-hidden rounded-full">
+                <Image
+                  src="/images/Riyaji_Devindu_02.jpg"
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, (max-width: 1024px) 320px, 340px"
+                />
+              </div>
+              {/* Glow behind image */}
+              <div className="absolute -inset-4 -z-10 rounded-full bg-gradient-to-tr from-primary/20 via-secondary/20 to-pink-500/20 blur-2xl" />
+            </div>
+
+            {/* Floating decoration dots */}
+            <motion.div
+              animate={{ y: [-8, 8, -8] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-3 -right-3 h-5 w-5 rounded-full bg-primary/40 blur-[1px]"
+            />
+            <motion.div
+              animate={{ y: [6, -6, 6] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-2 -left-4 h-4 w-4 rounded-full bg-secondary/40 blur-[1px]"
+            />
+            <motion.div
+              animate={{ x: [-5, 5, -5] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 -right-6 h-3 w-3 rounded-full bg-pink-400/40 blur-[1px]"
+            />
+          </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}

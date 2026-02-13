@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollReveal from "./ScrollReveal";
+import Image from "next/image";
 import { GraduationCap, Code2, Brain, Trophy } from "lucide-react";
 import profile from "@/data/profile.json";
 
@@ -44,9 +45,31 @@ export default function About() {
           </div>
         </ScrollReveal>
 
-        <div className="grid gap-12 lg:grid-cols-5">
+        <div className="grid gap-12 lg:grid-cols-12">
+          {/* Profile Image */}
+          <ScrollReveal className="lg:col-span-4 flex justify-center" direction="left">
+            <div className="relative mx-auto w-56 h-56 sm:w-64 sm:h-64 lg:w-full lg:h-auto lg:aspect-square max-w-[280px]">
+              {/* Gradient border frame */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary via-secondary to-pink-500 p-[2px]">
+                <div className="h-full w-full rounded-2xl bg-background" />
+              </div>
+              {/* Image */}
+              <div className="absolute inset-[4px] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/Riyaji_Devindu_02.jpg"
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 256px, 280px"
+                />
+              </div>
+              {/* Glow */}
+              <div className="absolute -inset-4 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-pink-500/10 blur-2xl" />
+            </div>
+          </ScrollReveal>
+
           {/* Text Content */}
-          <ScrollReveal className="lg:col-span-3" direction="left">
+          <ScrollReveal className="lg:col-span-5" direction="left">
             <div className="space-y-6">
               <p className="text-base sm:text-lg leading-relaxed text-foreground/70">
                 I&apos;m an engineering graduate from the{" "}
@@ -86,7 +109,7 @@ export default function About() {
           </ScrollReveal>
 
           {/* Stats / Highlight Cards */}
-          <ScrollReveal className="lg:col-span-2" direction="right">
+          <ScrollReveal className="lg:col-span-3" direction="right">
             <div className="grid grid-cols-2 gap-4">
               {highlights.map((item, index) => (
                 <ScrollReveal key={item.label} delay={index * 0.1}>

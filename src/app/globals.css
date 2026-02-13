@@ -172,3 +172,17 @@ section {
     min-height: -webkit-fill-available;
   }
 }
+
+/* Hero profile image spinning ring */
+.hero-image-ring > div:first-child {
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
