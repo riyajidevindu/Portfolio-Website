@@ -8,6 +8,7 @@ import Certifications from "@/components/Certifications";
 import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import SectionDivider from "@/components/SectionDivider";
 import posts from "@/data/posts.json";
 
 export default function Home() {
@@ -16,12 +17,19 @@ export default function Home() {
       <Navigation />
       <main>
         <Hero />
+        <SectionDivider />
         <About />
+        <SectionDivider />
         <Skills />
+        <SectionDivider />
         <Experience />
+        <SectionDivider />
         <Projects />
+        <SectionDivider />
         <Certifications />
+        <SectionDivider />
         <BlogPreview posts={posts} />
+        <SectionDivider />
         <Contact />
       </main>
       <Footer />

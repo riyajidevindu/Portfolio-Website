@@ -70,6 +70,34 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#030014" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Riyaji Devindu",
+              jobTitle: "Software & AI/ML Engineer",
+              url: "https://riyajidevindu.vercel.app",
+              sameAs: [
+                "https://github.com/riyajidevindu",
+                "https://linkedin.com/in/riyajidevindu",
+              ],
+              alumniOf: {
+                "@type": "CollegeOrUniversity",
+                name: "University of Ruhuna",
+              },
+              knowsAbout: [
+                "Software Engineering",
+                "Artificial Intelligence",
+                "Machine Learning",
+                "Full Stack Development",
+                "Computer Vision",
+                "Natural Language Processing",
+              ],
+            }),
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased noise`}
