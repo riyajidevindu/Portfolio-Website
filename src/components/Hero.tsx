@@ -54,34 +54,53 @@ function TypewriterText() {
   );
 }
 
+function seededRandom(seed: number) {
+  const x = Math.sin(seed + 1) * 10000;
+  return x - Math.floor(x);
+}
+
 function FloatingParticles() {
-  const count = typeof window !== "undefined" && window.innerWidth < 768 ? 12 : 30;
+  const [count, setCount] = useState(20);
+
+  useEffect(() => {
+    setCount(window.innerWidth < 768 ? 12 : 30);
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: count }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: Math.random() * 4 + 1,
-            height: Math.random() * 4 + 1,
-            background: `rgba(${Math.random() > 0.5 ? "34, 211, 238" : "168, 85, 247"}, ${Math.random() * 0.4 + 0.1})`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, Math.random() * -100 - 50],
-            x: [0, (Math.random() - 0.5) * 60],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 8 + 6,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+      {Array.from({ length: count }).map((_, i) => {
+        const r1 = seededRandom(i * 7);
+        const r2 = seededRandom(i * 13);
+        const r3 = seededRandom(i * 19);
+        const r4 = seededRandom(i * 31);
+        const r5 = seededRandom(i * 43);
+        const r6 = seededRandom(i * 61);
+        const r7 = seededRandom(i * 79);
+        return (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: r1 * 4 + 1,
+              height: r1 * 4 + 1,
+              background: `rgba(${r2 > 0.5 ? "34, 211, 238" : "168, 85, 247"}, ${r3 * 0.4 + 0.1})`,
+              left: `${r4 * 100}%`,
+              top: `${r5 * 100}%`,
+            }}
+            animate={{
+              y: [0, r6 * -100 - 50],
+              x: [0, (r7 - 0.5) * 60],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: seededRandom(i * 97) * 8 + 6,
+              repeat: Infinity,
+              delay: seededRandom(i * 53) * 5,
+              ease: "easeInOut",
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
