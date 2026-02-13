@@ -17,10 +17,6 @@ export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [postsCount, setPostsCount] = useState(0);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     try {
       const [analyticsRes, postsRes] = await Promise.all([
@@ -41,6 +37,11 @@ export default function AdminDashboard() {
       console.error("Failed to fetch analytics:", err);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial data fetch on mount
+    fetchData();
+  }, []);
 
   const stats = [
     {

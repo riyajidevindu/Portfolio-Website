@@ -62,10 +62,10 @@ function seededRandom(seed: number) {
 
 function FloatingParticles() {
   const [mounted, setMounted] = useState(false);
-  const [count, setCount] = useState(0);
+  const count = typeof globalThis.window !== "undefined" && window.innerWidth < 768 ? 12 : 30;
 
   useEffect(() => {
-    setCount(window.innerWidth < 768 ? 12 : 30);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only mount detection
     setMounted(true);
   }, []);
 

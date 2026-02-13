@@ -22,10 +22,6 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
   const fetchSettings = async () => {
     try {
       const res = await fetch("/api/settings");
@@ -37,6 +33,11 @@ export default function SettingsPage() {
       console.error("Failed to fetch settings:", err);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial data fetch on mount
+    fetchSettings();
+  }, []);
 
   const handleSave = async () => {
     if (!settings) return;

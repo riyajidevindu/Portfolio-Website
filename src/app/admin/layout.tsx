@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   FileText,
   Settings,
-  BarChart3,
   LogOut,
   Home,
   Menu,
@@ -31,10 +30,6 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
   const checkAuth = async () => {
     try {
       const res = await fetch("/api/auth");
@@ -44,6 +39,11 @@ export default function AdminLayout({
       setAuthenticated(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial auth check on mount
+    checkAuth();
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

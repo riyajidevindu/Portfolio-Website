@@ -33,109 +33,33 @@ const emptyPost: Omit<Post, "id"> = {
   published: true,
 };
 
-export default function PostsPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [editing, setEditing] = useState<Post | null>(null);
-  const [creating, setCreating] = useState(false);
-  const [newPost, setNewPost] = useState(emptyPost);
+function PostForm({
+  post,
+  setPost,
+  onSave,
+  onCancel,
+  saving,
+}: {
+  post: Omit<Post, "id">;
+  setPost: (p: Omit<Post, "id">) => void;
+  onSave: () => void;
+  onCancel: () => void;
+  saving: boolean;
+}) {
   const [tagInput, setTagInput] = useState("");
-  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
-    try {
-      const res = await fetch("/api/posts");
-      if (res.ok) {
-        const data = await res.json();
-        setPosts(data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch posts:", err);
-    }
-  };
-
-  const handleCreate = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch("/api/posts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPost),
-      });
-
-      if (res.ok) {
-        setCreating(false);
-        setNewPost(emptyPost);
-        fetchPosts();
-      }
-    } catch (err) {
-      console.error("Failed to create post:", err);
-    }
-    setSaving(false);
-  };
-
-  const handleUpdate = async () => {
-    if (!editing) return;
-    setSaving(true);
-    try {
-      const res = await fetch("/api/posts", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editing),
-      });
-
-      if (res.ok) {
-        setEditing(null);
-        fetchPosts();
-      }
-    } catch (err) {
-      console.error("Failed to update post:", err);
-    }
-    setSaving(false);
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this post?")) return;
-
-    try {
-      const res = await fetch(`/api/posts?id=${id}`, { method: "DELETE" });
-      if (res.ok) {
-        fetchPosts();
-      }
-    } catch (err) {
-      console.error("Failed to delete post:", err);
-    }
-  };
-
-  const addTag = (post: typeof newPost, setter: (p: typeof newPost) => void) => {
+  const addTag = () => {
     if (tagInput.trim() && !post.tags.includes(tagInput.trim())) {
-      setter({ ...post, tags: [...post.tags, tagInput.trim()] });
+      setPost({ ...post, tags: [...post.tags, tagInput.trim()] });
       setTagInput("");
     }
   };
 
-  const removeTag = (
-    tag: string,
-    post: typeof newPost,
-    setter: (p: typeof newPost) => void
-  ) => {
-    setter({ ...post, tags: post.tags.filter((t) => t !== tag) });
+  const removeTag = (tag: string) => {
+    setPost({ ...post, tags: post.tags.filter((t) => t !== tag) });
   };
 
-  const PostForm = ({
-    post,
-    setPost,
-    onSave,
-    onCancel,
-  }: {
-    post: typeof newPost;
-    setPost: (p: typeof newPost) => void;
-    onSave: () => void;
-    onCancel: () => void;
-  }) => (
+  return (
     <div className="glass rounded-2xl p-6">
       <div className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
@@ -212,13 +136,13 @@ export default function PostsPage() {
                 type="text"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag(post, setPost))}
+                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                 className="flex-1 rounded-xl border border-border bg-white/[0.02] px-4 py-2.5 text-sm text-foreground outline-none focus:border-primary/50"
                 placeholder="Add tag"
               />
               <button
                 type="button"
-                onClick={() => addTag(post, setPost)}
+                onClick={() => addTag()}
                 className="rounded-xl bg-primary/10 px-4 text-sm font-medium text-primary hover:bg-primary/20"
               >
                 Add
@@ -236,7 +160,7 @@ export default function PostsPage() {
               >
                 {tag}
                 <button
-                  onClick={() => removeTag(tag, post, setPost)}
+                  onClick={() => removeTag(tag)}
                   className="ml-1 hover:text-red-400"
                 >
                   <X size={12} />
@@ -278,6 +202,84 @@ export default function PostsPage() {
       </div>
     </div>
   );
+}
+
+export default function PostsPage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [editing, setEditing] = useState<Post | null>(null);
+  const [creating, setCreating] = useState(false);
+  const [newPost, setNewPost] = useState(emptyPost);
+  const [saving, setSaving] = useState(false);
+
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch("/api/posts");
+      if (res.ok) {
+        const data = await res.json();
+        setPosts(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch posts:", err);
+    }
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial data fetch on mount
+    fetchPosts();
+  }, []);
+
+  const handleCreate = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPost),
+      });
+
+      if (res.ok) {
+        setCreating(false);
+        setNewPost(emptyPost);
+        fetchPosts();
+      }
+    } catch (err) {
+      console.error("Failed to create post:", err);
+    }
+    setSaving(false);
+  };
+
+  const handleUpdate = async () => {
+    if (!editing) return;
+    setSaving(true);
+    try {
+      const res = await fetch("/api/posts", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editing),
+      });
+
+      if (res.ok) {
+        setEditing(null);
+        fetchPosts();
+      }
+    } catch (err) {
+      console.error("Failed to update post:", err);
+    }
+    setSaving(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+      const res = await fetch(`/api/posts?id=${id}`, { method: "DELETE" });
+      if (res.ok) {
+        fetchPosts();
+      }
+    } catch (err) {
+      console.error("Failed to delete post:", err);
+    }
+  };
 
   return (
     <div className="pt-8 lg:pt-0">
@@ -304,6 +306,7 @@ export default function PostsPage() {
             post={newPost}
             setPost={setNewPost as (p: typeof newPost) => void}
             onSave={handleCreate}
+            saving={saving}
             onCancel={() => {
               setCreating(false);
               setNewPost(emptyPost);
@@ -319,6 +322,7 @@ export default function PostsPage() {
           <PostForm
             post={editing}
             setPost={(p) => setEditing({ ...editing, ...p } as Post)}
+            saving={saving}
             onSave={handleUpdate}
             onCancel={() => setEditing(null)}
           />
