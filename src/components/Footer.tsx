@@ -67,7 +67,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-          <p className="flex items-center gap-1 text-xs text-foreground/30">
+          <p className="flex items-center gap-1 text-xs text-foreground/30" suppressHydrationWarning>
             © {new Date().getFullYear()} {profile.name}. Built with
             <Heart size={12} className="text-pink-400" />
             using Next.js & Tailwind CSS

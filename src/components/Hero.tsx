@@ -60,11 +60,15 @@ function seededRandom(seed: number) {
 }
 
 function FloatingParticles() {
-  const [count, setCount] = useState(20);
+  const [mounted, setMounted] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setCount(window.innerWidth < 768 ? 12 : 30);
+    setMounted(true);
   }, []);
+
+  if (!mounted) return <div className="absolute inset-0 overflow-hidden pointer-events-none" />;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
