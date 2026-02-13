@@ -1,13 +1,9 @@
 "use client";
 
-import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react";
+import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import profile from "@/data/profile.json";
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <footer className="relative border-t border-border bg-black/20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
@@ -73,17 +69,7 @@ export default function Footer() {
             using Next.js & Tailwind CSS
           </p>
 
-          {/* Back to top */}
-          <button
-            onClick={scrollToTop}
-            className="group flex items-center gap-2 text-xs text-foreground/30 transition-colors duration-200 hover:text-primary"
-          >
-            Back to top
-            <ArrowUp
-              size={14}
-              className="transition-transform duration-200 group-hover:-translate-y-1"
-            />
-          </button>
+
         </div>
       </div>
     </footer>

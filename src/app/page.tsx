@@ -8,6 +8,7 @@ import Certifications from "@/components/Certifications";
 import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 import SectionDivider from "@/components/SectionDivider";
 import posts from "@/data/posts.json";
 
@@ -33,6 +34,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
