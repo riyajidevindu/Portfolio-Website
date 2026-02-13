@@ -121,7 +121,7 @@ export default function Hero() {
 
       <FloatingParticles />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 sm:px-6 text-center">
         {/* Status badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
