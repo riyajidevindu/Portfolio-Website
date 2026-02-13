@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Getting Started with Privacy-Preserving AI",
+    "slug": "privacy-preserving-ai",
+    "excerpt": "Exploring techniques to protect user data while leveraging the power of Large Language Models.",
+    "content": "Privacy in AI is becoming increasingly important as LLMs become more prevalent in everyday applications. In this post, I explore various techniques for privacy-preserving AI, including differential privacy, federated learning, and local inference with Small Language Models (SLMs).\n\n## Why Privacy Matters in AI\n\nAs AI systems process more personal data, the risk of sensitive information leakage grows. Users often share personal details in prompts without realizing the implications.\n\n## Techniques for Privacy Preservation\n\n### 1. Local Inference\nRunning models locally ensures data never leaves the user's device. Tools like Ollama make this increasingly practical.\n\n### 2. Prompt Sanitization\nAutomatically detecting and removing sensitive information before sending prompts to cloud-based LLMs.\n\n### 3. Differential Privacy\nAdding carefully calibrated noise to training data to prevent individual data points from being identified.\n\n## Conclusion\n\nPrivacy-preserving AI is not just a technical challenge—it's an ethical imperative. As engineers, we must build systems that respect user privacy while delivering powerful AI capabilities.",
+    "date": "2025-12-15",
+    "tags": ["AI", "Privacy", "LLMs", "Machine Learning"],
+    "published": true
+  },
+  {
+    "id": "2",
+    "title": "Building Real-time Systems with RabbitMQ and FastAPI",
+    "slug": "rabbitmq-fastapi-realtime",
+    "excerpt": "A deep dive into creating scalable real-time messaging systems using RabbitMQ with FastAPI.",
+    "content": "In modern applications, real-time communication is essential. In this post, I share my experience building a WhatsApp automation platform using RabbitMQ for message queuing and FastAPI for the backend.\n\n## Architecture Overview\n\nThe system uses a microservices architecture where each service communicates through RabbitMQ message queues. FastAPI serves as the API gateway, handling incoming webhook events.\n\n## Key Components\n\n### Message Queue Design\nRabbitMQ provides reliable message delivery with support for various exchange types. We used topic exchanges for routing messages to appropriate service handlers.\n\n### Async Processing\nFastAPI's async capabilities combined with RabbitMQ's non-blocking message consumption create a highly responsive system.\n\n## Results\n\nThe system handles thousands of messages per minute with sub-second response times, demonstrating the power of event-driven architecture.",
+    "date": "2025-11-20",
+    "tags": ["Python", "FastAPI", "RabbitMQ", "Microservices"],
+    "published": true
+  }
+]

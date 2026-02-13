@@ -1,0 +1,14 @@
+{
+  "siteTitle": "Riyaji Devindu",
+  "siteDescription": "Software & AI/ML Engineer Portfolio",
+  "primaryColor": "#22d3ee",
+  "secondaryColor": "#a855f7",
+  "showBlog": true,
+  "showContact": true,
+  "socialLinks": {
+    "linkedin": "https://linkedin.com/in/riyajidevindu",
+    "github": "https://github.com/riyajidevindu",
+    "email": "riyajidevindu.samasundara@gmail.com"
+  },
+  "adminPassword": "admin123"
+}

@@ -1,0 +1,102 @@
+{
+  "name": "Riyaji Devindu",
+  "title": "Software & AI/ML Engineer",
+  "email": "riyajidevindu.samasundara@gmail.com",
+  "phone": "+94 76 441 7141",
+  "linkedin": "https://linkedin.com/in/riyajidevindu",
+  "github": "https://github.com/riyajidevindu",
+  "location": "Sri Lanka",
+  "summary": "Engineering graduate with a solid background in software development and system design, combined with a strong interest in AI-based solutions. Experienced in Full Stack Development (Java, Python, PHP) and Emerging Tech (Rust, LLMs). Focused on creating efficient, real-world systems through continuous learning and innovation.",
+  "education": {
+    "university": "University of Ruhuna",
+    "location": "Sri Lanka",
+    "degree": "B.Sc. Eng. in Computer Engineering",
+    "gpa": "3.58"
+  },
+  "skills": {
+    "Languages": ["Python", "Rust", "PHP", "JavaScript", "TypeScript"],
+    "Frameworks": ["FastAPI", "Laravel", "Tauri", "React.js", "Flutter"],
+    "AI & ML": ["LLMs", "NLP", "LangChain", "Computer Vision", "OpenCV", "YOLOv8", "PyTorch", "TensorFlow", "Ollama", "Vector DBs"],
+    "Databases": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Tools": ["Docker", "Kafka", "AWS", "Git", "Jira", "Notion", "RabbitMQ"],
+    "Others": ["Network Basics", "Linux", "Arm Robotics"]
+  },
+  "experience": [
+    {
+      "company": "Apps Technologies (Pvt) Ltd.",
+      "location": "Remote",
+      "role": "Associate Software Engineer",
+      "period": "Nov 2024 – Jan 2025",
+      "highlights": [
+        "Contributed to the development and maintenance of ERP systems using Laravel, PHP, and MySQL.",
+        "Focused on backend development, including complex business logic implementation and database management.",
+        "Optimized database queries to improve system performance and reliability."
+      ]
+    },
+    {
+      "company": "Apps Technologies (Pvt) Ltd.",
+      "location": "Remote",
+      "role": "Software Engineering Intern & Intern AI Team Lead",
+      "period": "May 2024 – Oct 2024",
+      "highlights": [
+        "Led the AI Intern team in developing BeMA, a healthcare-focused AI-integrated mobile application.",
+        "Developed dynamic web applications using Laravel, PHP, and MySQL, ensuring responsiveness and scalability.",
+        "Managed project timelines and documentation using Notion, fostering agile teamwork and technical coordination."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Privacy-Aware Prompt Enhancement System",
+      "tech": ["Rust", "Tauri", "React", "SLMs"],
+      "description": "Cross-platform desktop application to mitigate privacy risks in LLM usage. Implemented local detection mechanisms to exclude sensitive user data while preserving prompt intent. Created a 13,000-row custom dataset for model fine-tuning to support privacy-preserving NLP.",
+      "github": "",
+      "demo": "",
+      "featured": true
+    },
+    {
+      "title": "WhatsApp Reply Automation E-Commerce Platform",
+      "tech": ["Python", "FastAPI", "RabbitMQ"],
+      "description": "Automated customer service agent using Agentic AI to respond to WhatsApp queries in real-time. Integrated product database retrieval for accurate, context-aware responses. Utilized RabbitMQ for asynchronous message handling and microservices communication.",
+      "github": "",
+      "demo": "",
+      "featured": true
+    },
+    {
+      "title": "Sensitive Data Detection in Images",
+      "tech": ["FastAPI", "OpenCV", "YOLOv8", "Docker"],
+      "description": "Privacy-focused web app to redact sensitive info in images using fine-tuned YOLOv8 models. Optimized inference using ONNX Runtime and containerized the full stack using Docker for easy deployment.",
+      "github": "",
+      "demo": "",
+      "featured": true
+    },
+    {
+      "title": "Bookfair Reservation Management System",
+      "tech": ["Spring Boot", "Kafka", "Microservices"],
+      "description": "Microservices-based reservation platform with separate portals for users and employees. Implemented Apache Kafka for event-driven communication and JWT for secure authentication.",
+      "github": "",
+      "demo": "",
+      "featured": false
+    },
+    {
+      "title": "BeMA - Healthcare AI App",
+      "tech": ["Flutter", "Python", "Groq"],
+      "description": "Personalized healthcare app featuring daily reminders, stress-relief techniques, and a chatbot. Integrated voice-based Q&A systems to support user engagement and wellness tracking.",
+      "github": "",
+      "demo": "",
+      "featured": true
+    }
+  ],
+  "certifications": [
+    "Oracle Generative AI Professional Certification (2024)",
+    "Oracle AI Foundations Associate Certification (2023)",
+    "Huawei HCIA - Cloud Service V3.0",
+    "Full-Stack AI with Ollama & Mistral AI Development (Udemy)",
+    "Mistral AI Development (Udemy)"
+  ],
+  "volunteering": [
+    "Volunteer Management Committee Lead, IEEE Student Branch, UOR (2025-2026)",
+    "Program & Event Organizer, IEEE IAS Chapter, UOR (2024-2025)",
+    "Editor, IEEE IAS Chapter, UOR (2023-2024)"
+  ]
+}
