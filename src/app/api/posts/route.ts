@@ -10,9 +10,14 @@ function isAuthenticated(cookieStore: Awaited<ReturnType<typeof cookies>>) {
 
 export async function GET() {
   try {
-    const posts = await prisma.post.findMany({
+    const rawPosts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
     });
+    const posts = rawPosts.map((post) => ({
+      ...post,
+      tags: post.tags ? post.tags.split(",") : [],
+      date: post.createdAt.toISOString().split("T")[0],
+    }));
     return NextResponse.json(posts);
   } catch (error) {
     console.error("GET posts error:", error);
