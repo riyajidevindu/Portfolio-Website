@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
-import profile from "@/data/profile.json";
 
 const roles = [
   "Software Engineer",
@@ -12,6 +11,28 @@ const roles = [
   "Full Stack Developer",
   "Privacy Tech Enthusiast",
 ];
+
+interface ProfileData {
+  name: string;
+  title: string;
+  bio: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  location: string;
+  university: string;
+}
+
+const defaultProfile: ProfileData = {
+  name: "Riyaji Devindu",
+  title: "Software & AI/ML Engineer",
+  bio: "Software & AI/ML Engineer specializing in Full Stack Development, LLMs, Computer Vision, and privacy-preserving systems.",
+  email: "test@test.com",
+  github: "https://github.com/",
+  linkedin: "https://linkedin.com/",
+  location: "Sri Lanka",
+  university: "University of Ruhuna"
+};
 
 function TypewriterText() {
   const [currentRole, setCurrentRole] = useState(0);
@@ -111,6 +132,26 @@ function FloatingParticles() {
 }
 
 export default function Hero() {
+  const [profile, setProfile] = useState<ProfileData>(defaultProfile);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.name) {
+          setProfile({
+            ...defaultProfile,
+            ...data
+          });
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <section
       id="home"
@@ -168,7 +209,7 @@ export default function Hero() {
               transition={{ delay: 0.8, duration: 0.6 }}
               className="mx-auto mb-4 max-w-2xl text-base leading-relaxed text-foreground/60 sm:text-lg lg:mx-0"
             >
-              {profile.summary}
+              {profile.bio}
             </motion.p>
 
             {/* Location */}
@@ -181,7 +222,7 @@ export default function Hero() {
               <MapPin size={14} />
               <span>{profile.location}</span>
               <span className="mx-2">•</span>
-              <span>{profile.education.university}</span>
+              <span>{profile.university}</span>
             </motion.div>
 
             {/* CTA Buttons */}
