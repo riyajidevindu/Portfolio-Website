@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import prisma from "@/lib/prisma";
 
 const SESSION_TOKEN = "portfolio_admin_session";
 
@@ -9,19 +8,12 @@ function isAuthenticated(cookieStore: Awaited<ReturnType<typeof cookies>>) {
   return !!cookieStore.get(SESSION_TOKEN)?.value;
 }
 
-function getSettingsPath() {
-  return join(process.cwd(), "src/data/settings.json");
-}
-
 export async function GET() {
   try {
-    const data = readFileSync(getSettingsPath(), "utf-8");
-    const settings = JSON.parse(data);
-    // Don't expose admin password
-    const { adminPassword, ...publicSettings } = settings;
-    void adminPassword;
-    return NextResponse.json(publicSettings);
-  } catch {
+    const profile = await prisma.profile.findFirst();
+    return NextResponse.json(profile || {});
+  } catch (error) {
+    console.error("GET settings error:", error);
     return NextResponse.json({}, { status: 200 });
   }
 }
@@ -34,20 +26,29 @@ export async function PUT(request: Request) {
 
   try {
     const updates = await request.json();
-    const data = readFileSync(getSettingsPath(), "utf-8");
-    const settings = JSON.parse(data);
+    const profile = await prisma.profile.findFirst();
 
-    const updatedSettings = { ...settings, ...updates };
-    writeFileSync(
-      getSettingsPath(),
-      JSON.stringify(updatedSettings, null, 2),
-      "utf-8"
-    );
+    let updatedProfile;
+    if (profile) {
+      updatedProfile = await prisma.profile.update({
+        where: { id: profile.id },
+        data: updates,
+      });
+    } else {
+      updatedProfile = await prisma.profile.create({
+        data: {
+          name: updates.name || "Default Name",
+          title: updates.title || "Default Title",
+          bio: updates.bio || "Default Bio",
+          email: updates.email || "test@test.com",
+          ...updates,
+        },
+      });
+    }
 
-    const { adminPassword, ...publicSettings } = updatedSettings;
-    void adminPassword;
-    return NextResponse.json(publicSettings);
-  } catch {
+    return NextResponse.json(updatedProfile);
+  } catch (error) {
+    console.error("PUT settings error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
