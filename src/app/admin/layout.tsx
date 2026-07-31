@@ -11,10 +11,12 @@ import {
   Home,
   Menu,
   X,
+  Briefcase
 } from "lucide-react";
 
 const sidebarLinks = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/projects", label: "Projects", icon: Briefcase },
   { href: "/admin/posts", label: "Posts", icon: FileText },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
