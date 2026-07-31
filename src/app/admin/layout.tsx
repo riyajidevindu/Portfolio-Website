@@ -11,10 +11,12 @@ import {
   Home,
   Menu,
   X,
+  Briefcase
 } from "lucide-react";
 
 const sidebarLinks = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/projects", label: "Projects", icon: Briefcase },
   { href: "/admin/posts", label: "Posts", icon: FileText },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
@@ -25,6 +27,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -53,13 +56,14 @@ export default function AdminLayout({
       const res = await fetch("/api/auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
 
       if (data.success) {
         setAuthenticated(true);
         setPassword("");
+        setEmail("");
       } else {
         setError("Invalid password");
       }
@@ -98,12 +102,19 @@ export default function AdminLayout({
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Admin Email"
+                className="w-full rounded-xl border border-border bg-white/[0.02] px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/20 mb-4"
+                autoFocus
+              />
+              <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="w-full rounded-xl border border-border bg-white/[0.02] px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
-                autoFocus
               />
             </div>
             {error && (

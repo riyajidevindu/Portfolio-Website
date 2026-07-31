@@ -1,15 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import { ExternalLink, Github, ChevronRight, Sparkles } from "lucide-react";
-import profile from "@/data/profile.json";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  projectUrl: string;
+  githubUrl: string;
+  tags: string[];
+  featured: boolean;
+  order: number;
+}
 
 export default function Projects() {
   const [showAll, setShowAll] = useState(false);
-  const featured = profile.projects.filter((p) => p.featured);
-  const displayProjects = showAll ? profile.projects : featured;
+  const [projects, setProjects] = useState<Project[]>([]);
+  
+  useEffect(() => {
+    fetch("/api/projects")
+      .then(res => res.json())
+      .then(data => setProjects(data))
+      .catch(err => console.error("Failed to load projects", err));
+  }, []);
+
+  const featured = projects.filter((p) => p.featured);
+  const displayProjects = showAll ? projects : featured;
 
   return (
     <section id="projects" className="relative py-24 sm:py-32">
@@ -48,9 +68,9 @@ export default function Projects() {
                         <Sparkles size={20} />
                       </div>
                       <div className="flex gap-2">
-                        {project.github && (
+                        {project.githubUrl && (
                           <a
-                            href={project.github}
+                            href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="rounded-lg p-2 text-foreground/30 transition-all duration-200 hover:bg-white/5 hover:text-foreground"
@@ -59,9 +79,9 @@ export default function Projects() {
                             <Github size={18} />
                           </a>
                         )}
-                        {project.demo && (
+                        {project.projectUrl && (
                           <a
-                            href={project.demo}
+                            href={project.projectUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="rounded-lg p-2 text-foreground/30 transition-all duration-200 hover:bg-white/5 hover:text-primary"
@@ -85,7 +105,7 @@ export default function Projects() {
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
+                      {project.tags.map((tech) => (
                         <span
                           key={tech}
                           className="rounded-md border border-primary/15 bg-primary/5 px-2.5 py-1 text-[11px] font-medium text-primary/80"
@@ -102,7 +122,7 @@ export default function Projects() {
         </div>
 
         {/* Show All Button */}
-        {profile.projects.length > featured.length && (
+        {projects.length > featured.length && (
           <ScrollReveal>
             <div className="mt-10 text-center">
               <button

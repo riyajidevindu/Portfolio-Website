@@ -10,17 +10,18 @@ function isAuthenticated(cookieStore: Awaited<ReturnType<typeof cookies>>) {
 
 export async function GET() {
   try {
-    const rawPosts = await prisma.post.findMany({
-      orderBy: { createdAt: "desc" },
+    const rawProjects = await prisma.project.findMany({
+      orderBy: { order: "asc" },
     });
-    const posts = rawPosts.map((post) => ({
-      ...post,
-      tags: post.tags ? post.tags.split(",") : [],
-      date: post.createdAt.toISOString().split("T")[0],
+    
+    const projects = rawProjects.map((p) => ({
+      ...p,
+      tags: p.tags ? p.tags.split(",") : [],
     }));
-    return NextResponse.json(posts);
+
+    return NextResponse.json(projects);
   } catch (error) {
-    console.error("GET posts error:", error);
+    console.error("GET projects error:", error);
     return NextResponse.json([], { status: 200 });
   }
 }
@@ -32,29 +33,24 @@ export async function POST(request: Request) {
   }
 
   try {
-    const post = await request.json();
-    const slug =
-      post.slug ||
-      post.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
+    const project = await request.json();
 
-    const newPost = await prisma.post.create({
+    const newProject = await prisma.project.create({
       data: {
-        title: post.title,
-        slug,
-        excerpt: post.excerpt || "",
-        content: post.content || "",
-        published: post.published ?? true,
-        tags: Array.isArray(post.tags) ? post.tags.join(",") : (post.tags || ""),
-        publishedAt: post.published ? new Date() : null,
+        title: project.title,
+        description: project.description,
+        imageUrl: project.imageUrl || null,
+        projectUrl: project.projectUrl || null,
+        githubUrl: project.githubUrl || null,
+        featured: project.featured ?? false,
+        tags: Array.isArray(project.tags) ? project.tags.join(",") : (project.tags || ""),
+        order: project.order || 0,
       },
     });
 
-    return NextResponse.json(newPost, { status: 201 });
+    return NextResponse.json(newProject, { status: 201 });
   } catch (error) {
-    console.error("POST posts error:", error);
+    console.error("POST projects error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -66,27 +62,27 @@ export async function PUT(request: Request) {
   }
 
   try {
-    const { id, ...updatedPost } = await request.json();
+    const { id, ...updatedProject } = await request.json();
     
     if (!id) {
-       return NextResponse.json({ error: "Post ID required" }, { status: 400 });
+       return NextResponse.json({ error: "Project ID required" }, { status: 400 });
     }
 
-    const tags = Array.isArray(updatedPost.tags) 
-        ? updatedPost.tags.join(",") 
-        : updatedPost.tags;
+    const tags = Array.isArray(updatedProject.tags) 
+        ? updatedProject.tags.join(",") 
+        : updatedProject.tags;
 
-    const updated = await prisma.post.update({
+    const updated = await prisma.project.update({
       where: { id },
       data: {
-        ...updatedPost,
+        ...updatedProject,
         ...(tags !== undefined && { tags }),
       },
     });
 
     return NextResponse.json(updated);
   } catch (error) {
-    console.error("PUT posts error:", error);
+    console.error("PUT projects error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -102,16 +98,16 @@ export async function DELETE(request: Request) {
     const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: "Post ID required" }, { status: 400 });
+      return NextResponse.json({ error: "Project ID required" }, { status: 400 });
     }
 
-    await prisma.post.delete({
+    await prisma.project.delete({
       where: { id },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("DELETE posts error:", error);
+    console.error("DELETE projects error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

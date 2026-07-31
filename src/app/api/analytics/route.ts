@@ -1,66 +1,30 @@
 import { NextResponse } from "next/server";
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { join } from "path";
 import { cookies } from "next/headers";
+import prisma from "@/lib/prisma";
 
 const SESSION_TOKEN = "portfolio_admin_session";
 
-interface VisitRecord {
-  date: string;
-  page: string;
-  referrer: string;
-  userAgent: string;
-  timestamp: number;
-}
-
-function getAnalyticsPath() {
-  return join(process.cwd(), "src/data/analytics.json");
-}
-
-function readAnalytics(): VisitRecord[] {
-  const path = getAnalyticsPath();
-  if (!existsSync(path)) {
-    writeFileSync(path, "[]", "utf-8");
-    return [];
-  }
-  try {
-    const data = readFileSync(path, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-function writeAnalytics(data: VisitRecord[]) {
-  // Keep last 10,000 records to prevent file from growing too large
-  const trimmed = data.slice(-10000);
-  writeFileSync(getAnalyticsPath(), JSON.stringify(trimmed, null, 2), "utf-8");
-}
-
-// Track a visit
 export async function POST(request: Request) {
   try {
     const { page, referrer } = await request.json();
-    const analytics = readAnalytics();
 
-    const record: VisitRecord = {
-      date: new Date().toISOString().split("T")[0],
-      page: page || "/",
-      referrer: referrer || "direct",
-      userAgent: request.headers.get("user-agent") || "unknown",
-      timestamp: Date.now(),
-    };
-
-    analytics.push(record);
-    writeAnalytics(analytics);
+    await prisma.analytics.create({
+      data: {
+        date: new Date().toISOString().split("T")[0],
+        page: page || "/",
+        referrer: referrer || "direct",
+        userAgent: request.headers.get("user-agent") || "unknown",
+        timestamp: Date.now(),
+      },
+    });
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error("POST analytics error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
-// Get analytics (admin only)
 export async function GET() {
   const cookieStore = await cookies();
   const session = cookieStore.get(SESSION_TOKEN);
@@ -70,9 +34,18 @@ export async function GET() {
   }
 
   try {
-    const analytics = readAnalytics();
     const now = Date.now();
     const dayMs = 86400000;
+    
+    // We only fetch last 30 days of analytics for dashboard
+    const thirtyDaysAgo = now - (30 * dayMs);
+    const analytics = await prisma.analytics.findMany({
+      where: {
+        timestamp: {
+          gte: thirtyDaysAgo
+        }
+      }
+    });
 
     // Today's visits
     const today = new Date().toISOString().split("T")[0];
@@ -84,20 +57,16 @@ export async function GET() {
     ).length;
 
     // Last 30 days
-    const last30Days = analytics.filter(
-      (v) => now - v.timestamp < 30 * dayMs
-    ).length;
+    const last30Days = analytics.length;
 
     // Total
-    const totalVisits = analytics.length;
+    const totalVisitsCount = await prisma.analytics.count();
 
     // Daily breakdown (last 30 days)
     const dailyCounts: Record<string, number> = {};
-    analytics
-      .filter((v) => now - v.timestamp < 30 * dayMs)
-      .forEach((v) => {
-        dailyCounts[v.date] = (dailyCounts[v.date] || 0) + 1;
-      });
+    analytics.forEach((v) => {
+      dailyCounts[v.date] = (dailyCounts[v.date] || 0) + 1;
+    });
 
     // Top pages
     const pageCounts: Record<string, number> = {};
@@ -105,7 +74,7 @@ export async function GET() {
       pageCounts[v.page] = (pageCounts[v.page] || 0) + 1;
     });
     const topPages = Object.entries(pageCounts)
-      .sort(([, a], [, b]) => b - a)
+      .sort(([, a], [, b]) => (b as number) - (a as number))
       .slice(0, 10)
       .map(([page, count]) => ({ page, count }));
 
@@ -115,7 +84,7 @@ export async function GET() {
       refCounts[v.referrer] = (refCounts[v.referrer] || 0) + 1;
     });
     const topReferrers = Object.entries(refCounts)
-      .sort(([, a], [, b]) => b - a)
+      .sort(([, a], [, b]) => (b as number) - (a as number))
       .slice(0, 10)
       .map(([referrer, count]) => ({ referrer, count }));
 
@@ -123,12 +92,13 @@ export async function GET() {
       todayVisits,
       last7Days,
       last30Days,
-      totalVisits,
+      totalVisits: totalVisitsCount,
       dailyCounts,
       topPages,
       topReferrers,
     });
-  } catch {
+  } catch (error) {
+    console.error("GET analytics error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
